@@ -1,4 +1,4 @@
-fp = fopen('output_7.bin', 'rb');
+fp = fopen('output.bin', 'rb');
 
 fractional_bits = 5;
 

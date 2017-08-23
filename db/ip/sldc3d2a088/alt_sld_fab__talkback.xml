@@ -11,12 +11,12 @@
    <SOPCModuleParameter>
     <C>2</C>
     <Name>DESIGN_HASH</Name>
-    <Value>df3a421ad11e1d94b8fb</Value>
+    <Value>1f0e78987f134bb9315e</Value>
    </SOPCModuleParameter>
    <SOPCModuleParameter>
     <C>3</C>
     <Name>NODE_COUNT</Name>
-    <Value>2</Value>
+    <Value>3</Value>
    </SOPCModuleParameter>
    <SOPCModuleParameter>
     <C>4</C>
@@ -26,12 +26,12 @@
    <SOPCModuleParameter>
     <C>5</C>
     <Name>SETTINGS</Name>
-    <Value>{fabric sld dir agent mfr_code 110 type_code 128 version 1 instance -1 ir_width 1 prefer_host { } psig f63706bb} {fabric sld dir agent mfr_code 70 type_code 34 version 3 instance 0 ir_width 2 psig f63706bb} </Value>
+    <Value>{fabric sld dir agent mfr_code 110 type_code 128 version 1 instance -1 ir_width 1 prefer_host { } psig f63706bb} {fabric sld dir agent mfr_code 70 type_code 34 version 3 instance 0 ir_width 2 psig f63706bb} {fabric sld dir agent mfr_code 110 type_code 1 version 0 instance 0 ir_width 2 psig f63706bb} </Value>
    </SOPCModuleParameter>
    <SOPCModuleParameter>
     <C>6</C>
     <Name>CLOCKS</Name>
-    <Value>{id {} } {id {} } </Value>
+    <Value>{id {} } {id {} } {id {} } </Value>
    </SOPCModuleParameter>
    <SOPCModuleParameter>
     <C>7</C>
@@ -41,7 +41,7 @@
    <SOPCModuleParameter>
     <C>8</C>
     <Name>EP_INFOS</Name>
-    <Value>{hpath {basic:inst|basic_jtag_uart:jtag_uart|alt_jtag_atlantic:basic_jtag_uart_alt_jtag_atlantic|altera_sld_agent_endpoint:inst|altera_fabric_endpoint:ep} } {hpath {basic:inst|basic_nios2_cpu:nios2_cpu|basic_nios2_cpu_cpu:cpu|basic_nios2_cpu_cpu_nios2_oci:the_basic_nios2_cpu_cpu_nios2_oci|basic_nios2_cpu_cpu_debug_slave_wrapper:the_basic_nios2_cpu_cpu_debug_slave_wrapper|sld_virtual_jtag_basic:basic_nios2_cpu_cpu_debug_slave_phy|sld_virtual_jtag_impl:sld_virtual_jtag_impl_inst} } </Value>
+    <Value>{hpath {basic:inst|basic_jtag_uart:jtag_uart|alt_jtag_atlantic:basic_jtag_uart_alt_jtag_atlantic|altera_sld_agent_endpoint:inst|altera_fabric_endpoint:ep} } {hpath {basic:inst|basic_nios2_cpu:nios2_cpu|basic_nios2_cpu_cpu:cpu|basic_nios2_cpu_cpu_nios2_oci:the_basic_nios2_cpu_cpu_nios2_oci|basic_nios2_cpu_cpu_debug_slave_wrapper:the_basic_nios2_cpu_cpu_debug_slave_wrapper|sld_virtual_jtag_basic:basic_nios2_cpu_cpu_debug_slave_phy|sld_virtual_jtag_impl:sld_virtual_jtag_impl_inst} } {hpath {pzdyqx:nabboc} } </Value>
    </SOPCModuleParameter>
    <SOPCModuleParameter>
     <C>9</C>
@@ -69,7 +69,7 @@
     <Value>Unknown</Value>
    </SOPCModuleParameter>
   </SOPCModule>
-  <SystemID>828258219</SystemID>
+  <SystemID>285571293</SystemID>
  </SOPCSystem>
  <SchemaVersion>schema_2013-01-18</SchemaVersion>
 </ProgramExecution>

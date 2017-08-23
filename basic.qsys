@@ -6,11 +6,16 @@
    version="1.0"
    description=""
    tags=""
-   categories="" />
+   categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
    element $${FILENAME}
    {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
    }
    element clk_50MHz
    {
@@ -106,7 +111,7 @@
  <parameter name="hideFromIPCatalog" value="false" />
  <parameter name="lockedInterfaceDefinition" value="" />
  <parameter name="maxAdditionalLatency" value="1" />
- <parameter name="projectName" value="" />
+ <parameter name="projectName" value="Basic_DVS.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
  <parameter name="testBenchDutName" value="" />
@@ -214,7 +219,7 @@
   <parameter name="icache_ramBlockType" value="Automatic" />
   <parameter name="icache_size" value="4096" />
   <parameter name="icache_tagramBlockType" value="Automatic" />
-  <parameter name="impl" value="Tiny" />
+  <parameter name="impl" value="Fast" />
   <parameter name="instAddrWidth" value="27" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='sdram.s1' start='0x2000000' end='0x4000000' /><slave name='nios2_cpu.debug_mem_slave' start='0x4000800' end='0x4001000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />

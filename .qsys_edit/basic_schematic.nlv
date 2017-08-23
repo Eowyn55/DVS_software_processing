@@ -1,8 +1,26 @@
 # # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
 # 
-preplace inst unsaved.clk_0 -pg 1 -lvl 1 -y 30
-preplace inst unsaved -pg 1 -lvl 1 -y 40 -regy -20
-preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)clk_0.clk_in_reset,(SLAVE)unsaved.reset) 1 0 1 NJ
-preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)clk_0.clk_in,(SLAVE)unsaved.clk) 1 0 1 NJ
-levelinfo -pg 1 0 50 270
-levelinfo -hier unsaved 60 90 260
+preplace inst basic.performance_counter -pg 1 -lvl 2 -y 400
+preplace inst basic.nios2_cpu.cpu -pg 1
+preplace inst basic.sdram -pg 1 -lvl 2 -y 480
+preplace inst basic.nios2_cpu.reset_bridge -pg 1
+preplace inst basic.nios2_cpu -pg 1 -lvl 1 -y 70
+preplace inst basic.pll -pg 1 -lvl 2 -y 160
+preplace inst basic.nios2_cpu.clock_bridge -pg 1
+preplace inst basic.clk_50MHz -pg 1 -lvl 1 -y 300
+preplace inst basic -pg 1 -lvl 1 -y 40 -regy -20
+preplace inst basic.jtag_uart -pg 1 -lvl 2 -y 300
+preplace netloc EXPORT<net_container>basic</net_container>(MASTER)basic.sdram_clk,(MASTER)pll.c1) 1 2 1 N
+preplace netloc EXPORT<net_container>basic</net_container>(SLAVE)sdram.wire,(SLAVE)basic.sdram) 1 0 2 NJ 550 NJ
+preplace netloc POINT_TO_POINT<net_container>basic</net_container>(SLAVE)jtag_uart.irq,(MASTER)nios2_cpu.irq) 1 1 1 580
+preplace netloc POINT_TO_POINT<net_container>basic</net_container>(MASTER)clk_50MHz.clk,(SLAVE)pll.inclk_interface) 1 1 1 620
+preplace netloc FAN_OUT<net_container>basic</net_container>(SLAVE)sdram.clk,(SLAVE)nios2_cpu.clk,(MASTER)pll.c0,(SLAVE)performance_counter.clk,(SLAVE)jtag_uart.clk) 1 0 3 200 30 680 150 910
+preplace netloc EXPORT<net_container>basic</net_container>(SLAVE)pll.locked_conduit,(SLAVE)basic.altpll_0_locked_conduit) 1 0 2 NJ 230 NJ
+preplace netloc EXPORT<net_container>basic</net_container>(SLAVE)basic.altpll_0_areset_conduit,(SLAVE)pll.areset_conduit) 1 0 2 NJ 210 NJ
+preplace netloc INTERCONNECT<net_container>basic</net_container>(SLAVE)performance_counter.reset,(MASTER)clk_50MHz.clk_reset,(SLAVE)jtag_uart.reset,(SLAVE)sdram.reset,(SLAVE)pll.inclk_interface_reset,(MASTER)nios2_cpu.debug_reset_request,(SLAVE)nios2_cpu.reset) 1 0 2 220 290 640
+preplace netloc EXPORT<net_container>basic</net_container>(SLAVE)basic.altpll_0_phasedone_conduit,(SLAVE)pll.phasedone_conduit) 1 0 2 NJ 250 NJ
+preplace netloc EXPORT<net_container>basic</net_container>(SLAVE)clk_50MHz.clk_in,(SLAVE)basic.clk) 1 0 1 NJ
+preplace netloc INTERCONNECT<net_container>basic</net_container>(MASTER)nios2_cpu.instruction_master,(SLAVE)performance_counter.control_slave,(SLAVE)jtag_uart.avalon_jtag_slave,(SLAVE)pll.pll_slave,(SLAVE)sdram.s1,(SLAVE)nios2_cpu.debug_mem_slave,(MASTER)nios2_cpu.data_master) 1 0 2 200 270 660
+preplace netloc EXPORT<net_container>basic</net_container>(SLAVE)basic.reset,(SLAVE)clk_50MHz.clk_in_reset) 1 0 1 NJ
+levelinfo -pg 1 0 170 1020
+levelinfo -hier basic 180 340 720 930

@@ -54,11 +54,13 @@ architecture rtl of basic is
 			d_waitrequest                       : in  std_logic                     := 'X';             -- waitrequest
 			d_write                             : out std_logic;                                        -- write
 			d_writedata                         : out std_logic_vector(31 downto 0);                    -- writedata
+			d_readdatavalid                     : in  std_logic                     := 'X';             -- readdatavalid
 			debug_mem_slave_debugaccess_to_roms : out std_logic;                                        -- debugaccess
 			i_address                           : out std_logic_vector(26 downto 0);                    -- address
 			i_read                              : out std_logic;                                        -- read
 			i_readdata                          : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			i_waitrequest                       : in  std_logic                     := 'X';             -- waitrequest
+			i_readdatavalid                     : in  std_logic                     := 'X';             -- readdatavalid
 			irq                                 : in  std_logic_vector(31 downto 0) := (others => 'X'); -- irq
 			debug_reset_request                 : out std_logic;                                        -- reset
 			debug_mem_slave_address             : in  std_logic_vector(8 downto 0)  := (others => 'X'); -- address
@@ -138,6 +140,7 @@ architecture rtl of basic is
 			nios2_cpu_data_master_byteenable                      : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
 			nios2_cpu_data_master_read                            : in  std_logic                     := 'X';             -- read
 			nios2_cpu_data_master_readdata                        : out std_logic_vector(31 downto 0);                    -- readdata
+			nios2_cpu_data_master_readdatavalid                   : out std_logic;                                        -- readdatavalid
 			nios2_cpu_data_master_write                           : in  std_logic                     := 'X';             -- write
 			nios2_cpu_data_master_writedata                       : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
 			nios2_cpu_data_master_debugaccess                     : in  std_logic                     := 'X';             -- debugaccess
@@ -145,6 +148,7 @@ architecture rtl of basic is
 			nios2_cpu_instruction_master_waitrequest              : out std_logic;                                        -- waitrequest
 			nios2_cpu_instruction_master_read                     : in  std_logic                     := 'X';             -- read
 			nios2_cpu_instruction_master_readdata                 : out std_logic_vector(31 downto 0);                    -- readdata
+			nios2_cpu_instruction_master_readdatavalid            : out std_logic;                                        -- readdatavalid
 			jtag_uart_avalon_jtag_slave_address                   : out std_logic_vector(0 downto 0);                     -- address
 			jtag_uart_avalon_jtag_slave_write                     : out std_logic;                                        -- write
 			jtag_uart_avalon_jtag_slave_read                      : out std_logic;                                        -- read
@@ -330,12 +334,14 @@ architecture rtl of basic is
 	signal nios2_cpu_data_master_address                                     : std_logic_vector(26 downto 0); -- nios2_cpu:d_address -> mm_interconnect_0:nios2_cpu_data_master_address
 	signal nios2_cpu_data_master_byteenable                                  : std_logic_vector(3 downto 0);  -- nios2_cpu:d_byteenable -> mm_interconnect_0:nios2_cpu_data_master_byteenable
 	signal nios2_cpu_data_master_read                                        : std_logic;                     -- nios2_cpu:d_read -> mm_interconnect_0:nios2_cpu_data_master_read
+	signal nios2_cpu_data_master_readdatavalid                               : std_logic;                     -- mm_interconnect_0:nios2_cpu_data_master_readdatavalid -> nios2_cpu:d_readdatavalid
 	signal nios2_cpu_data_master_write                                       : std_logic;                     -- nios2_cpu:d_write -> mm_interconnect_0:nios2_cpu_data_master_write
 	signal nios2_cpu_data_master_writedata                                   : std_logic_vector(31 downto 0); -- nios2_cpu:d_writedata -> mm_interconnect_0:nios2_cpu_data_master_writedata
 	signal nios2_cpu_instruction_master_readdata                             : std_logic_vector(31 downto 0); -- mm_interconnect_0:nios2_cpu_instruction_master_readdata -> nios2_cpu:i_readdata
 	signal nios2_cpu_instruction_master_waitrequest                          : std_logic;                     -- mm_interconnect_0:nios2_cpu_instruction_master_waitrequest -> nios2_cpu:i_waitrequest
 	signal nios2_cpu_instruction_master_address                              : std_logic_vector(26 downto 0); -- nios2_cpu:i_address -> mm_interconnect_0:nios2_cpu_instruction_master_address
 	signal nios2_cpu_instruction_master_read                                 : std_logic;                     -- nios2_cpu:i_read -> mm_interconnect_0:nios2_cpu_instruction_master_read
+	signal nios2_cpu_instruction_master_readdatavalid                        : std_logic;                     -- mm_interconnect_0:nios2_cpu_instruction_master_readdatavalid -> nios2_cpu:i_readdatavalid
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_chipselect          : std_logic;                     -- mm_interconnect_0:jtag_uart_avalon_jtag_slave_chipselect -> jtag_uart:av_chipselect
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_readdata            : std_logic_vector(31 downto 0); -- jtag_uart:av_readdata -> mm_interconnect_0:jtag_uart_avalon_jtag_slave_readdata
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_waitrequest         : std_logic;                     -- jtag_uart:av_waitrequest -> mm_interconnect_0:jtag_uart_avalon_jtag_slave_waitrequest
@@ -412,11 +418,13 @@ begin
 			d_waitrequest                       => nios2_cpu_data_master_waitrequest,                       --                          .waitrequest
 			d_write                             => nios2_cpu_data_master_write,                             --                          .write
 			d_writedata                         => nios2_cpu_data_master_writedata,                         --                          .writedata
+			d_readdatavalid                     => nios2_cpu_data_master_readdatavalid,                     --                          .readdatavalid
 			debug_mem_slave_debugaccess_to_roms => nios2_cpu_data_master_debugaccess,                       --                          .debugaccess
 			i_address                           => nios2_cpu_instruction_master_address,                    --        instruction_master.address
 			i_read                              => nios2_cpu_instruction_master_read,                       --                          .read
 			i_readdata                          => nios2_cpu_instruction_master_readdata,                   --                          .readdata
 			i_waitrequest                       => nios2_cpu_instruction_master_waitrequest,                --                          .waitrequest
+			i_readdatavalid                     => nios2_cpu_instruction_master_readdatavalid,              --                          .readdatavalid
 			irq                                 => nios2_cpu_irq_irq,                                       --                       irq.irq
 			debug_reset_request                 => nios2_cpu_debug_reset_request_reset,                     --       debug_reset_request.reset
 			debug_mem_slave_address             => mm_interconnect_0_nios2_cpu_debug_mem_slave_address,     --           debug_mem_slave.address
@@ -492,6 +500,7 @@ begin
 			nios2_cpu_data_master_byteenable                      => nios2_cpu_data_master_byteenable,                                  --                                                .byteenable
 			nios2_cpu_data_master_read                            => nios2_cpu_data_master_read,                                        --                                                .read
 			nios2_cpu_data_master_readdata                        => nios2_cpu_data_master_readdata,                                    --                                                .readdata
+			nios2_cpu_data_master_readdatavalid                   => nios2_cpu_data_master_readdatavalid,                               --                                                .readdatavalid
 			nios2_cpu_data_master_write                           => nios2_cpu_data_master_write,                                       --                                                .write
 			nios2_cpu_data_master_writedata                       => nios2_cpu_data_master_writedata,                                   --                                                .writedata
 			nios2_cpu_data_master_debugaccess                     => nios2_cpu_data_master_debugaccess,                                 --                                                .debugaccess
@@ -499,6 +508,7 @@ begin
 			nios2_cpu_instruction_master_waitrequest              => nios2_cpu_instruction_master_waitrequest,                          --                                                .waitrequest
 			nios2_cpu_instruction_master_read                     => nios2_cpu_instruction_master_read,                                 --                                                .read
 			nios2_cpu_instruction_master_readdata                 => nios2_cpu_instruction_master_readdata,                             --                                                .readdata
+			nios2_cpu_instruction_master_readdatavalid            => nios2_cpu_instruction_master_readdatavalid,                        --                                                .readdatavalid
 			jtag_uart_avalon_jtag_slave_address                   => mm_interconnect_0_jtag_uart_avalon_jtag_slave_address,             --                     jtag_uart_avalon_jtag_slave.address
 			jtag_uart_avalon_jtag_slave_write                     => mm_interconnect_0_jtag_uart_avalon_jtag_slave_write,               --                                                .write
 			jtag_uart_avalon_jtag_slave_read                      => mm_interconnect_0_jtag_uart_avalon_jtag_slave_read,                --                                                .read

@@ -1,5 +1,5 @@
 EDA Netlist Writer report for Basic_DVS
-Wed Jan 18 12:39:16 2017
+Wed Aug 23 23:38:28 2017
 Quartus II 64-Bit Version 15.0.2 Build 153 07/15/2015 SJ Web Edition
 
 
@@ -8,9 +8,7 @@ Quartus II 64-Bit Version 15.0.2 Build 153 07/15/2015 SJ Web Edition
 ---------------------
   1. Legal Notice
   2. EDA Netlist Writer Summary
-  3. Simulation Settings
-  4. Simulation Generated Files
-  5. EDA Netlist Writer Messages
+  3. EDA Netlist Writer Messages
 
 
 
@@ -34,53 +32,14 @@ agreement for further details.
 
 
 
-+-------------------------------------------------------------------+
-; EDA Netlist Writer Summary                                        ;
-+---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Wed Jan 18 12:39:16 2017 ;
-; Revision Name             ; Basic_DVS                             ;
-; Top-level Entity Name     ; Basic_DVS                             ;
-; Family                    ; Cyclone IV E                          ;
-; Simulation Files Creation ; Successful                            ;
-+---------------------------+---------------------------------------+
-
-
-+----------------------------------------------------------------------------------------------------------------------------+
-; Simulation Settings                                                                                                        ;
-+---------------------------------------------------------------------------------------------------+------------------------+
-; Option                                                                                            ; Setting                ;
-+---------------------------------------------------------------------------------------------------+------------------------+
-; Tool Name                                                                                         ; ModelSim-Altera (VHDL) ;
-; Generate netlist for functional simulation only                                                   ; Off                    ;
-; Time scale                                                                                        ; 1 ps                   ;
-; Truncate long hierarchy paths                                                                     ; Off                    ;
-; Map illegal HDL characters                                                                        ; Off                    ;
-; Flatten buses into individual nodes                                                               ; Off                    ;
-; Maintain hierarchy                                                                                ; Off                    ;
-; Bring out device-wide set/reset signals as ports                                                  ; Off                    ;
-; Enable glitch filtering                                                                           ; Off                    ;
-; Do not write top level VHDL entity                                                                ; Off                    ;
-; Disable detection of setup and hold time violations in the input registers of bi-directional pins ; Off                    ;
-; Architecture name in VHDL output netlist                                                          ; structure              ;
-; Generate third-party EDA tool command script for RTL functional simulation                        ; Off                    ;
-; Generate third-party EDA tool command script for gate-level simulation                            ; Off                    ;
-+---------------------------------------------------------------------------------------------------+------------------------+
-
-
-+--------------------------------------------------------------------------------------------------------+
-; Simulation Generated Files                                                                             ;
-+--------------------------------------------------------------------------------------------------------+
-; Generated Files                                                                                        ;
-+--------------------------------------------------------------------------------------------------------+
-; D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/Basic_DVS_6_1200mv_85c_slow.vho      ;
-; D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/Basic_DVS_6_1200mv_0c_slow.vho       ;
-; D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/Basic_DVS_min_1200mv_0c_fast.vho     ;
-; D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/Basic_DVS.vho                        ;
-; D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/Basic_DVS_6_1200mv_85c_vhd_slow.sdo  ;
-; D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/Basic_DVS_6_1200mv_0c_vhd_slow.sdo   ;
-; D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/Basic_DVS_min_1200mv_0c_vhd_fast.sdo ;
-; D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/Basic_DVS_vhd.sdo                    ;
-+--------------------------------------------------------------------------------------------------------+
++---------------------------------------------------------------+
+; EDA Netlist Writer Summary                                    ;
++---------------------------+-----------------------------------+
+; EDA Netlist Writer Status ; Failed - Wed Aug 23 23:38:28 2017 ;
+; Revision Name             ; Basic_DVS                         ;
+; Top-level Entity Name     ; Basic_DVS                         ;
+; Family                    ; Cyclone IV E                      ;
++---------------------------+-----------------------------------+
 
 
 +-----------------------------+
@@ -89,20 +48,18 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit EDA Netlist Writer
     Info: Version 15.0.2 Build 153 07/15/2015 SJ Web Edition
-    Info: Processing started: Wed Jan 18 12:39:08 2017
+    Info: Processing started: Wed Aug 23 23:38:25 2017
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off Basic_DVS -c Basic_DVS
-Info (204019): Generated file Basic_DVS_6_1200mv_85c_slow.vho in folder "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file Basic_DVS_6_1200mv_0c_slow.vho in folder "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file Basic_DVS_min_1200mv_0c_fast.vho in folder "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file Basic_DVS.vho in folder "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file Basic_DVS_6_1200mv_85c_vhd_slow.sdo in folder "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file Basic_DVS_6_1200mv_0c_vhd_slow.sdo in folder "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file Basic_DVS_min_1200mv_0c_vhd_fast.sdo in folder "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file Basic_DVS_vhd.sdo in folder "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/simulation/modelsim/" for EDA simulation tool
-Info: Quartus II 64-Bit EDA Netlist Writer was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 630 megabytes
-    Info: Processing ended: Wed Jan 18 12:39:16 2017
-    Info: Elapsed time: 00:00:08
-    Info: Total CPU time (on all processors): 00:00:07
+Error (204012): Can't generate netlist output files because the file "c:/users/marko/documents/etf/master/digitalni_vlsi/projekat/dvs_software_processing/db/ip/basic/submodules/basic_nios2_cpu_cpu.v" is an OpenCore Plus time-limited file
+Error (204009): Can't generate netlist output files because the license for encrypted file "c:/users/marko/documents/etf/master/digitalni_vlsi/projekat/dvs_software_processing/db/ip/basic/submodules/basic_nios2_cpu_cpu.v" is not available
+Error (204012): Can't generate netlist output files because the file "c:/users/marko/documents/etf/master/digitalni_vlsi/projekat/dvs_software_processing/db/ip/basic/submodules/basic_nios2_cpu_cpu.v" is an OpenCore Plus time-limited file
+Error (204009): Can't generate netlist output files because the license for encrypted file "c:/users/marko/documents/etf/master/digitalni_vlsi/projekat/dvs_software_processing/db/ip/basic/submodules/basic_nios2_cpu_cpu.v" is not available
+Error (204012): Can't generate netlist output files because the file "c:/users/marko/documents/etf/master/digitalni_vlsi/projekat/dvs_software_processing/db/ip/basic/submodules/basic_nios2_cpu_cpu.v" is an OpenCore Plus time-limited file
+Error (204009): Can't generate netlist output files because the license for encrypted file "c:/users/marko/documents/etf/master/digitalni_vlsi/projekat/dvs_software_processing/db/ip/basic/submodules/basic_nios2_cpu_cpu.v" is not available
+Error: Quartus II 64-Bit EDA Netlist Writer was unsuccessful. 6 errors, 0 warnings
+    Error: Peak virtual memory: 625 megabytes
+    Error: Processing ended: Wed Aug 23 23:38:29 2017
+    Error: Elapsed time: 00:00:04
+    Error: Total CPU time (on all processors): 00:00:03
 
 

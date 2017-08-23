@@ -67,7 +67,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </table>
   <table class="blueBar">
    <tr>
-    <td class="l">2017.01.18.12:30:55</td>
+    <td class="l">2017.08.23.23:29:45</td>
     <td class="r">Datasheet</td>
    </tr>
   </table>
@@ -791,11 +791,11 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">shifterType</td>
-        <td class="parametervalue">medium_le_shift</td>
+        <td class="parametervalue">fast_le_shift</td>
        </tr>
        <tr>
         <td class="parametername">multiplierType</td>
-        <td class="parametervalue">no_mul</td>
+        <td class="parametervalue">mul_fast32</td>
        </tr>
        <tr>
         <td class="parametername">mul_shift_choice</td>
@@ -847,7 +847,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">impl</td>
-        <td class="parametervalue">Tiny</td>
+        <td class="parametervalue">Fast</td>
        </tr>
        <tr>
         <td class="parametername">icache_size</td>
@@ -1151,7 +1151,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">setting_bit31BypassDCache</td>
-        <td class="parametervalue">false</td>
+        <td class="parametervalue">true</td>
        </tr>
        <tr>
         <td class="parametername">translate_on</td>
@@ -1372,23 +1372,27 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">CPU_IMPLEMENTATION</td>
-        <td class="parametervalue">"tiny"</td>
+        <td class="parametervalue">"fast"</td>
        </tr>
        <tr>
         <td class="parametername">DATA_ADDR_WIDTH</td>
         <td class="parametervalue">27</td>
        </tr>
        <tr>
+        <td class="parametername">DCACHE_BYPASS_MASK</td>
+        <td class="parametervalue">0x80000000</td>
+       </tr>
+       <tr>
         <td class="parametername">DCACHE_LINE_SIZE</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">32</td>
        </tr>
        <tr>
         <td class="parametername">DCACHE_LINE_SIZE_LOG2</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">5</td>
        </tr>
        <tr>
         <td class="parametername">DCACHE_SIZE</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">2048</td>
        </tr>
        <tr>
         <td class="parametername">EXCEPTION_ADDR</td>
@@ -1412,7 +1416,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">HARDWARE_MULTIPLY_PRESENT</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">1</td>
        </tr>
        <tr>
         <td class="parametername">HARDWARE_MULX_PRESENT</td>
@@ -1427,6 +1431,10 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
         <td class="parametervalue"></td>
        </tr>
        <tr>
+        <td class="parametername">HAS_EXTRA_EXCEPTION_INFO</td>
+        <td class="parametervalue"></td>
+       </tr>
+       <tr>
         <td class="parametername">HAS_ILLEGAL_INSTRUCTION_EXCEPTION</td>
         <td class="parametervalue"></td>
        </tr>
@@ -1436,19 +1444,27 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">ICACHE_LINE_SIZE</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">32</td>
        </tr>
        <tr>
         <td class="parametername">ICACHE_LINE_SIZE_LOG2</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">5</td>
        </tr>
        <tr>
         <td class="parametername">ICACHE_SIZE</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">4096</td>
+       </tr>
+       <tr>
+        <td class="parametername">INITDA_SUPPORTED</td>
+        <td class="parametervalue"></td>
        </tr>
        <tr>
         <td class="parametername">INST_ADDR_WIDTH</td>
         <td class="parametervalue">27</td>
+       </tr>
+       <tr>
+        <td class="parametername">NUM_OF_SHADOW_REG_SETS</td>
+        <td class="parametervalue">0</td>
        </tr>
        <tr>
         <td class="parametername">OCI_VERSION</td>
@@ -2633,8 +2649,8 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </div>
   <table class="blueBar">
    <tr>
-    <td class="l">generation took 0.01 seconds</td>
-    <td class="r">rendering took 0.15 seconds</td>
+    <td class="l">generation took 0.07 seconds</td>
+    <td class="r">rendering took 0.22 seconds</td>
    </tr>
   </table>
  </body>

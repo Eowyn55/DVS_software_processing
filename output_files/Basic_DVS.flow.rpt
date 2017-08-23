@@ -1,5 +1,5 @@
 Flow report for Basic_DVS
-Wed Jan 18 12:39:16 2017
+Wed Aug 23 23:38:28 2017
 Quartus II 64-Bit Version 15.0.2 Build 153 07/15/2015 SJ Web Edition
 
 
@@ -38,26 +38,26 @@ agreement for further details.
 
 
 
-+---------------------------------------------------------------------------------+
-; Flow Summary                                                                    ;
-+------------------------------------+--------------------------------------------+
-; Flow Status                        ; Successful - Wed Jan 18 12:39:16 2017      ;
-; Quartus II 64-Bit Version          ; 15.0.2 Build 153 07/15/2015 SJ Web Edition ;
-; Revision Name                      ; Basic_DVS                                  ;
-; Top-level Entity Name              ; Basic_DVS                                  ;
-; Family                             ; Cyclone IV E                               ;
-; Device                             ; EP4CE22F17C6                               ;
-; Timing Models                      ; Final                                      ;
-; Total logic elements               ; 3,054 / 22,320 ( 14 % )                    ;
-;     Total combinational functions  ; 2,801 / 22,320 ( 13 % )                    ;
-;     Dedicated logic registers      ; 1,852 / 22,320 ( 8 % )                     ;
-; Total registers                    ; 1921                                       ;
-; Total pins                         ; 41 / 154 ( 27 % )                          ;
-; Total virtual pins                 ; 0                                          ;
-; Total memory bits                  ; 11,264 / 608,256 ( 2 % )                   ;
-; Embedded Multiplier 9-bit elements ; 0 / 132 ( 0 % )                            ;
-; Total PLLs                         ; 1 / 4 ( 25 % )                             ;
-+------------------------------------+--------------------------------------------+
++-------------------------------------------------------------------------------------------+
+; Flow Summary                                                                              ;
++------------------------------------+------------------------------------------------------+
+; Flow Status                        ; EDA Netlist Writer Failed - Wed Aug 23 23:38:28 2017 ;
+; Quartus II 64-Bit Version          ; 15.0.2 Build 153 07/15/2015 SJ Web Edition           ;
+; Revision Name                      ; Basic_DVS                                            ;
+; Top-level Entity Name              ; Basic_DVS                                            ;
+; Family                             ; Cyclone IV E                                         ;
+; Device                             ; EP4CE22F17C6                                         ;
+; Timing Models                      ; Final                                                ;
+; Total logic elements               ; 4,807 / 22,320 ( 22 % )                              ;
+;     Total combinational functions  ; 4,250 / 22,320 ( 19 % )                              ;
+;     Dedicated logic registers      ; 3,029 / 22,320 ( 14 % )                              ;
+; Total registers                    ; 3098                                                 ;
+; Total pins                         ; 41 / 154 ( 27 % )                                    ;
+; Total virtual pins                 ; 0                                                    ;
+; Total memory bits                  ; 65,280 / 608,256 ( 11 % )                            ;
+; Embedded Multiplier 9-bit elements ; 6 / 132 ( 5 % )                                      ;
+; Total PLLs                         ; 1 / 4 ( 25 % )                                       ;
++------------------------------------+------------------------------------------------------+
 
 
 +-----------------------------------------+
@@ -65,7 +65,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 01/18/2017 12:36:13 ;
+; Start date & time ; 08/23/2017 23:31:47 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; Basic_DVS           ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ agreement for further details.
 +-------------------------------------+---------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                     ; Value                                 ; Default Value ; Entity Name ; Section Id     ;
 +-------------------------------------+---------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 57327199693140.148473937307564        ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID               ; 189607929404229.150352390506420       ; --            ; --          ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT              ; Vhdl                                  ; --            ; --          ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (VHDL)                ; <None>        ; --          ; --             ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                    ; --            ; --          ; --             ;
@@ -96,12 +96,12 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:01:48     ; 1.0                     ; 807 MB              ; 00:03:17                           ;
-; Fitter                    ; 00:00:34     ; 1.2                     ; 1212 MB             ; 00:00:28                           ;
-; Assembler                 ; 00:00:03     ; 1.0                     ; 630 MB              ; 00:00:03                           ;
-; TimeQuest Timing Analyzer ; 00:00:07     ; 1.2                     ; 747 MB              ; 00:00:05                           ;
-; EDA Netlist Writer        ; 00:00:08     ; 1.0                     ; 630 MB              ; 00:00:07                           ;
-; Total                     ; 00:02:40     ; --                      ; --                  ; 00:04:00                           ;
+; Analysis & Synthesis      ; 00:04:36     ; 1.0                     ; 879 MB              ; 00:06:04                           ;
+; Fitter                    ; 00:01:07     ; 1.2                     ; 1314 MB             ; 00:01:02                           ;
+; Assembler                 ; 00:00:06     ; 1.0                     ; 631 MB              ; 00:00:05                           ;
+; TimeQuest Timing Analyzer ; 00:00:15     ; 1.1                     ; 771 MB              ; 00:00:12                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 617 MB              ; 00:00:03                           ;
+; Total                     ; 00:06:07     ; --                      ; --                  ; 00:07:26                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -110,11 +110,11 @@ agreement for further details.
 +---------------------------+------------------+-----------+------------+----------------+
 ; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
 +---------------------------+------------------+-----------+------------+----------------+
-; Analysis & Synthesis      ; Milica-PC        ; Windows 7 ; 6.2        ; x86_64         ;
-; Fitter                    ; Milica-PC        ; Windows 7 ; 6.2        ; x86_64         ;
-; Assembler                 ; Milica-PC        ; Windows 7 ; 6.2        ; x86_64         ;
-; TimeQuest Timing Analyzer ; Milica-PC        ; Windows 7 ; 6.2        ; x86_64         ;
-; EDA Netlist Writer        ; Milica-PC        ; Windows 7 ; 6.2        ; x86_64         ;
+; Analysis & Synthesis      ; Marko-PC         ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; Marko-PC         ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; Marko-PC         ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; Marko-PC         ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; Marko-PC         ; Windows 7 ; 6.1        ; x86_64         ;
 +---------------------------+------------------+-----------+------------+----------------+
 
 
