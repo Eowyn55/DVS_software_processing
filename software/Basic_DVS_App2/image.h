@@ -41,7 +41,7 @@ typedef struct {
 void image_init_from_file(image_t *im, const char *filename, int type);
 void image_init(image_t *im, unsigned long width, unsigned long height,
 		int type);
-void coeffs_init_from_file(image_t *im, const char *filename);
+void coeffs_init_from_file(image_t *im, const char *filename, int filterSize);
 void image_deinit(image_t *im);
 void image_write_to_file(image_t *im, const char* filename);
 void image_add_block(image_t* dest, image_t* src, unsigned long start_x,

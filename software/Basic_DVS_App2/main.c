@@ -20,57 +20,168 @@
 #include "sys/alt_cache.h"
 #include "image.h"
 
+#define FILTER_ORDER_3    (3)
+#define FILTER_ORDER_5    (5)
+#define FILTER_ORDER_7    (7)
+
+#define NAME_SIZE         (128)
+#define INNER_PATH        ("/mnt/host/")
+#define OUTPUT_PATH_3     ("/mnt/host/output_3.bin")
+#define OUTPUT_PATH_5     ("/mnt/host/output_5.bin")
+#define OUTPUT_PATH_7     ("/mnt/host/output_7.bin")
+
 int main() {
 	while (1) {
 
 		image_t in_image;
-		image_t exp_image;
+		image_t exp_image_3;
+		image_t exp_image_5;
+		image_t exp_image_7;
 		image_t coeff;
 		image_t out_image;
 
-		char coef_file_name[50];
-		char coef_file_name_full[] = "/mnt/host/";
-		printf("Give the name of the bin file with coeficients:\n");
-		fflush( stdout);
-		scanf("%s", coef_file_name);
-		strcat(coef_file_name_full, coef_file_name);
-		coeffs_init_from_file(&coeff, coef_file_name_full);
+		char* coeffsFileName_3 = NULL;
+		char* coeffsFileName_5 = NULL;
+		char* coeffsFileName_7 = NULL;
+		char* inputFileName = NULL;
 
-		char image_file_name[50];
-		char image_file_name_full[] = "/mnt/host/";
-		printf("Give the name of the bin file with image pixels:\n");
-		fflush( stdout);
-		scanf("%s", image_file_name);
-		strcat(image_file_name_full, image_file_name);
-		image_init_from_file(&in_image, image_file_name_full, 1);
-
-		image_init(&out_image, in_image.width, in_image.height, 2);
-		image_init(&exp_image, in_image.width + FILTER_ORDER - 1,
-				in_image.height + FILTER_ORDER - 1, 1);
-
-		printf("Start image processing...\n");
 		PERF_RESET(PERFORMANCE_COUNTER_BASE);
 		PERF_START_MEASURING(PERFORMANCE_COUNTER_BASE);
 
+		/* Input image loading. */
+		inputFileName = (char *) malloc(NAME_SIZE);
+		memset(inputFileName, 0, NAME_SIZE);
+		strcpy(inputFileName, INNER_PATH);
+		printf("Path to input image: ");
+		fflush(stdout);
+		scanf("%s", inputFileName + strlen(inputFileName));
+		image_init_from_file(&in_image, inputFileName, 1);
+		free(inputFileName);
+		inputFileName = NULL;
+
+		/* Configure output image. */
+		image_init(&out_image, in_image.width, in_image.height, 2);
+
+		/* Configure expanded image for 3x3 kernel */
+		image_init(&exp_image_3,
+				   in_image.width + FILTER_ORDER_3 - 1,
+				   in_image.height + FILTER_ORDER_3 - 1,
+				   1);
+		image_add_block(&exp_image_3,
+				        &in_image,
+				        FILTER_ORDER_3 / 2,
+				        FILTER_ORDER_3 / 2);
+		image_edge_repeat(&exp_image_3, FILTER_ORDER_3);
+
+		/* 3x3 kernel coefficients loading. */
+		coeffsFileName_3 = (char *) malloc(NAME_SIZE);
+		memset(coeffsFileName_3, 0, NAME_SIZE);
+		strcpy(coeffsFileName_3, INNER_PATH);
+		printf("Path to 3x3 coefficients: ");
+		fflush(stdout);
+		scanf("%s", coeffsFileName_3 + strlen(coeffsFileName_3));
+		coeffs_init_from_file(&coeff, coeffsFileName_3, FILTER_ORDER_3);
+		free(coeffsFileName_3);
+		coeffsFileName_3 = NULL;
+
+		printf("Start image processing with 3x3 kernel...\n");
+
 		PERF_BEGIN(PERFORMANCE_COUNTER_BASE, 1);
-		image_add_block(&exp_image, &in_image, FILTER_ORDER / 2,
-		FILTER_ORDER / 2);
-		image_edge_repeat(&exp_image, FILTER_ORDER);
+		fir_filter(&exp_image_3, &coeff, &out_image);
 		PERF_END(PERFORMANCE_COUNTER_BASE, 1);
 
-		//image_write_to_file(&exp_image, "exp_image.bin");
+		printf("Finished image processing with 3x3 kernel\n");
+		printf("Releasing resources and writing to the file...\n");
+
+		image_write_to_file(&out_image, OUTPUT_PATH_3);
+		image_deinit(&exp_image_3);
+		image_deinit(&out_image);
+		image_deinit(&coeff);
+
+		/* Configure output image. */
+		image_init(&out_image, in_image.width, in_image.height, 2);
+
+		/* Configure expanded image for 5x5 kernel */
+		image_init(&exp_image_5,
+				   in_image.width + FILTER_ORDER_5 - 1,
+				   in_image.height + FILTER_ORDER_5 - 1,
+				   1);
+		image_add_block(&exp_image_5,
+				        &in_image,
+				        FILTER_ORDER_5 / 2,
+				        FILTER_ORDER_5 / 2);
+		image_edge_repeat(&exp_image_5, FILTER_ORDER_5);
+
+		/* 5x5 kernel coefficients loading. */
+		coeffsFileName_5 = (char *) malloc(NAME_SIZE);
+		memset(coeffsFileName_5, 0, NAME_SIZE);
+		strcpy(coeffsFileName_5, INNER_PATH);
+		printf("Path to 5x5 coefficients: ");
+		fflush(stdout);
+		scanf("%s", coeffsFileName_5 + strlen(coeffsFileName_5));
+		coeffs_init_from_file(&coeff, coeffsFileName_5, FILTER_ORDER_5);
+		free(coeffsFileName_5);
+		coeffsFileName_5 = NULL;
+
+		printf("Start image processing with 5x5 kernel...\n");
 
 		PERF_BEGIN(PERFORMANCE_COUNTER_BASE, 2);
-		fir_filter(&exp_image, &coeff, &out_image);
+		fir_filter(&exp_image_5, &coeff, &out_image);
 		PERF_END(PERFORMANCE_COUNTER_BASE, 2);
 
-		image_write_to_file(&out_image, "/mnt/host/output.bin");
+		printf("Finished image processing with 5x5 kernel\n");
+		printf("Releasing resources and writing to the file...\n");
+
+		image_write_to_file(&out_image, OUTPUT_PATH_5);
+		image_deinit(&exp_image_5);
+		image_deinit(&out_image);
+		image_deinit(&coeff);
+
+		/* Configure output image. */
+		image_init(&out_image, in_image.width, in_image.height, 2);
+
+		/* Configure expanded image for 7x7 kernel */
+		image_init(&exp_image_7,
+				   in_image.width + FILTER_ORDER_7 - 1,
+				   in_image.height + FILTER_ORDER_7 - 1,
+				   1);
+		image_add_block(&exp_image_7,
+				        &in_image,
+				        FILTER_ORDER_7 / 2,
+				        FILTER_ORDER_7 / 2);
+		image_edge_repeat(&exp_image_7, FILTER_ORDER_7);
+
+		/* 7x7 kernel coefficients loading. */
+		coeffsFileName_7 = (char *) malloc(NAME_SIZE);
+		memset(coeffsFileName_7, 0, NAME_SIZE);
+		strcpy(coeffsFileName_7, INNER_PATH);
+		printf("Path to 7x7 coefficients: ");
+		fflush(stdout);
+		scanf("%s", coeffsFileName_7 + strlen(coeffsFileName_7));
+		coeffs_init_from_file(&coeff, coeffsFileName_7, FILTER_ORDER_7);
+		free(coeffsFileName_7);
+		coeffsFileName_7 = NULL;
+
+		printf("Start image processing with 7x7 kernel...\n");
+
+		PERF_BEGIN(PERFORMANCE_COUNTER_BASE, 3);
+		fir_filter(&exp_image_7, &coeff, &out_image);
+		PERF_END(PERFORMANCE_COUNTER_BASE, 3);
+
+		printf("Finished image processing with 7x7 kernel\n");
+		printf("Releasing resources and writing to the file...\n");
+
+		image_write_to_file(&out_image, OUTPUT_PATH_7);
+		image_deinit(&exp_image_7);
+		image_deinit(&out_image);
+		image_deinit(&coeff);
+
+		perf_print_formatted_report((void *) PERFORMANCE_COUNTER_BASE,
+				alt_get_cpu_freq(), 3, "Exp image 3", "Exp image 5", "Exp image 7");
+
 		printf("Finishing image processing...\n");
 		printf("Cleaning heap...\n\n");
 		image_deinit(&in_image);
-		image_deinit(&exp_image);
-		image_deinit(&coeff);
-		image_deinit(&out_image);
 
 		perf_print_formatted_report((void *) PERFORMANCE_COUNTER_BASE,
 				alt_get_cpu_freq(), 2, "Exp image", "fir");

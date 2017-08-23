@@ -61,12 +61,12 @@ void image_init(image_t *im, unsigned long width, unsigned long height,
 	}
 }
 
-void coeffs_init_from_file(image_t *im, const char *filename) {
+void coeffs_init_from_file(image_t *im, const char *filename, int filterSize) {
 	FILE *f;
 	f = fopen(filename, "rb");
 	assert(f != NULL);
-	im->width = FILTER_ORDER;
-	im->height = FILTER_ORDER;
+	im->width = filterSize;
+	im->height = filterSize;
 	im->type = 2;
 	im->pixels = (void*) malloc(im->height * sizeof(signed short*));
 	int i = 0;
