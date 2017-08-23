@@ -1,0 +1,37 @@
+11:46:37 **** Build of configuration Nios II for project Basic_DVS_App2 ****
+make all 
+Info: Building ../Basic_DVS_App2_bsp/
+D:/program_files/altera/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Basic_DVS_App2_bsp/
+[BSP build complete]
+Info: Compiling image.c to obj/default/image.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Basic_DVS_App2_bsp//HAL/inc -I../Basic_DVS_App2_bsp/ -I../Basic_DVS_App2_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx  -o obj/default/image.o image.c
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Basic_DVS_App2_bsp//HAL/inc -I../Basic_DVS_App2_bsp/ -I../Basic_DVS_App2_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx  -o obj/default/main.o main.c
+In file included from main.c:21:0:
+image.h:21:0: warning: "assert" redefined
+ #define assert(n) \
+ ^
+In file included from main.c:14:0:
+d:\program_files\altera\nios2eds\bin\gnu\h-x86_64-mingw32\nios2-elf\include\assert.h:26:0: note: this is the location of the previous definition
+ #  define assert(__e) ((__e) ? (void)0 : __assert_func (__FILE__, __LINE__, \
+ ^
+Info: Linking Basic_DVS_App2.elf
+nios2-elf-g++  -T'../Basic_DVS_App2_bsp//linker.x' -msys-crt0='../Basic_DVS_App2_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Basic_DVS_App2_bsp/   -Wl,-Map=Basic_DVS_App2.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx  -o Basic_DVS_App2.elf obj/default/image.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert Basic_DVS_App2.elf --thread_model hal --cpu_name nios2_cpu --qsys true --simulation_enabled false --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name basic --quartus_project_dir "D:/etf/MASTER/DVS/projekat/prva_tacka-hardver" --jdi ../..//output_files/Basic_DVS.jdi --sopcinfo D:/etf/MASTER/DVS/projekat/prva_tacka-hardver/software/Basic_DVS_App2_bsp/../../basic.sopcinfo
+Info: (Basic_DVS_App2.elf) 114 KBytes program size (code + initialized data).
+Info:                      32646 KBytes free for stack + heap.
+Info: Creating Basic_DVS_App2.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Basic_DVS_App2.elf >Basic_DVS_App2.objdump
+[Basic_DVS_App2 build complete]
+11:46:54 **** Build of configuration Nios II for project Basic_DVS_App2 ****
+make all 
+Info: Building ../Basic_DVS_App2_bsp/
+D:/program_files/altera/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Basic_DVS_App2_bsp/
+[BSP build complete]
+[Basic_DVS_App2 build complete]
+11:46:56 **** Incremental Build of configuration Nios II for project Basic_DVS_App2 ****
+make all 
+Info: Building ../Basic_DVS_App2_bsp/
+D:/program_files/altera/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Basic_DVS_App2_bsp/
+[BSP build complete]
+[Basic_DVS_App2 build complete]

@@ -1,0 +1,27 @@
+/*
+ * main.c
+ *
+ *  Created on: 21.01.2017.
+ *      Author: Marko
+ */
+
+#include <stdio.h>
+#include "image.h"
+
+int main() {
+	image_t in_image;
+	image_t exp_image;
+	image_t coeff;
+	image_t out_image;
+	printf("Start image processing...\n");
+	image_init_from_file(&in_image, "panorama.bin", 1);
+	coeffs_init_from_file(&coeff, "filter_coeffs.bin");
+	image_init(&out_image, in_image.width, in_image.height, 2);
+	image_init(&exp_image, in_image.width + FILTER_ORDER, in_image.height + FILTER_ORDER, 1);
+	image_add_block(&exp_image, &in_image, FILTER_ORDER / 2, FILTER_ORDER / 2);
+	image_edge_repeat(&exp_image, FILTER_ORDER);
+	fir_filter(&exp_image, &coeff, &out_image);
+	image_write_to_file(&out_image, "output.bin");
+	printf("Finishing image processing...\n");
+	return 1;
+}

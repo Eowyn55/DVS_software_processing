@@ -1,0 +1,214 @@
+/**************************************************************************************************************************************/
+/**************************************                                    ************************************************************/
+/**************************************       Program: Image processing	   ************************************************************/
+/**************************************        Authors: Aleksa, Nikola	   ************************************************************/
+/**************************************                                    ************************************************************/
+/**************************************************************************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "altera_avalon_performance_counter.h"
+#include "alt_types.h"
+#include "system.h"
+#include "string.h"
+#include "sys/alt_cache.h"
+
+int main()
+{
+/**********************************************  Pointers *****************************************************************************/
+	FILE *pt_file;														// Pointer to binary image file
+
+	unsigned long *pt_width ;											// Pointer to width of input image [4B]
+	unsigned long *pt_height ;											// Pointer to height of input image [4B]
+	pt_width = (unsigned long*) malloc(4);								// Allocating 4B for image width
+	pt_height = (unsigned long*) malloc(4);								// Allocating 4B for image height
+
+	unsigned char *pt_buff_input;										// Pointer to temporary buffer for input image
+	short *pt_output;													// Pointer to allocated output image
+
+	short *pt_buff_filter;												// Pointer to file with coefficients of filter
+	pt_buff_filter = (short*) malloc(2);								// Allocating 2B for filter data
+	short filter[7][7];													// Filter matrix [7x7], not a pointer but its declared here
+
+
+/****************************************  Image and filter names *********************************************************************/
+
+	char image_name[20];												// Name of the binary image file
+	char filter_name[20];												// Name of the 2D filter file
+
+
+/********************************************  Gathering names ************************************************************************/
+
+	printf("Program started!\n");										// Notify the user
+
+	printf("Name of the image for processing in the host file:\n");
+	scanf("%s", image_name);
+
+	printf("Name of the filter for processing in the host file:\n");
+ 	scanf("%s", filter_name);											// Reading user input
+
+
+ /*****************************************  Reading input image **********************************************************************/
+
+ 	char path[] = "/mnt/host/";											// Generating path from name
+ 	strcat(path,image_name);
+ 	strcat(path,".bin");
+
+	pt_file = fopen(path, "rb");										// Opening binary file
+
+	fread(pt_width, 4, 1, pt_file);										// Reading width of input image
+	fread(pt_height, 4, 1, pt_file);									// Reading height of input image
+
+	pt_buff_input = (unsigned char*) malloc((*pt_height)*(*pt_width));  // Allocating memory for input image buffer
+	fread(pt_buff_input, 1, (*pt_height)*(*pt_width), pt_file);			// Reading input image
+
+	fclose(pt_file);													// Closing binary file
+
+	printf("Input image read.\n");										// Notify the user
+
+
+/*********************************************  Reading filter ************************************************************************/
+
+	strcpy(path,"/mnt/host/");											// Generating path from name
+ 	strcat(path,filter_name);
+ 	strcat(path,".bin");
+
+	pt_file = fopen(path, "rb");										// Opening file with filter coefficients
+
+	int i, j, k, l;														// Counters for FOR loops
+
+	for(i=0;i<7;i++)
+	{
+		for(j=0;j<7;j++)
+		{
+			fread(pt_buff_filter, 2, 1, pt_file);						// Reading filter
+			filter[i][j]= *pt_buff_filter;								// Creating filter matrix
+		}
+	}
+
+	fclose(pt_file);													// Closing binary file
+
+	printf("Reading filter done\n"); 									// Notify the user
+
+
+/************************************  Performance counter initiation *****************************************************************/
+
+	PERF_RESET(PERFORMANCE_COUNTER_0_BASE);
+	PERF_START_MEASURING(PERFORMANCE_COUNTER_0_BASE);					// Starting the performance counter
+	PERF_BEGIN(PERFORMANCE_COUNTER_0_BASE, 1); 							// Starting the measurement
+
+
+
+/*****************************************  Expanding input image *********************************************************************/
+
+	unsigned char *input_image[((*pt_height)+6)];						// Creating expanded input image
+	for (i=0; i<((*pt_height)+6); i++)
+	{
+		input_image[i] = (unsigned char *)calloc(((*pt_width)+6) , sizeof(unsigned char));
+	}
+
+	for(i=0;i<(*pt_height);i++){
+		for(j=0;j<(*pt_width);j++){
+			input_image[i+3][j+3]=pt_buff_input[i*(*pt_width) + j];
+		}
+	}
+
+	for(i=0;i<3;i++){
+		for(j=0;j<((*pt_width)+6);j++){
+			input_image[i][j]=input_image[3][j];						// Expanding by upper rows
+		}
+	}
+
+	for(i=((*pt_height)+3);i<((*pt_height)+6);i++){
+		for(j=0;j<((*pt_width)+6);j++){
+			input_image[i][j]=input_image[(*pt_height)+2][j];			// Expanding by lower rows
+		}
+	}
+
+	for(i=0;i<((*pt_height)+6);i++){
+			for(j=0;j<3;j++){
+				input_image[i][j]=input_image[i][3];					// Expanding by left columns
+			}
+		}
+
+	for(i=0;i<((*pt_height)+6);i++){
+				for(j=((*pt_width)+3);j<((*pt_width)+6);j++){
+					input_image[i][j]=input_image[i][((*pt_width)+2)];	// Expanding by right columns
+				}
+			}
+
+	PERF_END(PERFORMANCE_COUNTER_0_BASE, 1); 							// Stopping the performance counter
+
+
+/**************************************  Allocating memory for output image ***********************************************************/
+
+	pt_output = malloc( (*pt_height) * (*pt_width) * sizeof( short)); 	// Allocating memory for output image
+
+
+/***********************************************  Filtering image *********************************************************************/
+
+	long output_pixel = 0;												// Output pixel
+
+	PERF_BEGIN(PERFORMANCE_COUNTER_0_BASE, 2); 							// Starting the performance measurement
+
+	for(i=0;i<(*pt_height);i++)											// Nested loops for pixel by pixel processing
+	{
+		for(j=0;j<(*pt_width);j++)
+		{
+			output_pixel=0;
+			for(k=0;k<7;k++)											// Nested loops for calculating output pixel
+			{
+				for(l=0;l<7;l++)										// Calculating output pixel in Q12.11 format [4B]
+				{
+					output_pixel += ((long) input_image[i+k][j+l]) * ((long) filter[k][l]);
+				}
+			}
+			output_pixel=output_pixel>>6;								// Formating from Q12.11 to Q12.5
+
+			if (output_pixel >= 32768 )									// If positive overrun occurred
+				output_pixel = 32768 - 1;
+			else if(output_pixel< (-32768) )							// If negative overrun occurred
+				output_pixel = -32768;
+
+			pt_output[j+i*(*pt_width)]= (short) (output_pixel); 		// Write to output image
+		}
+	}
+
+	PERF_END(PERFORMANCE_COUNTER_0_BASE, 2); 							// Stopping the performance counter
+
+
+/*****************************************  Writing output image **********************************************************************/
+
+	pt_file = fopen("/mnt/host/panorama_output.bin", "wb");				// Opening binary file
+
+	fwrite(pt_width, 4, 1, pt_file); 									// Writing width to file
+	fwrite(pt_height, 4, 1, pt_file);									// Writing height to file
+	fwrite(pt_output, 2, (*pt_width)*(*pt_height), pt_file);			// Writing image to file
+
+	fclose(pt_file);													// Closing binary file
+
+	printf("Output image generated.\n");								// Notify the user
+
+
+/*******************************  Writing results from performance counter ************************************************************/
+
+	perf_print_formatted_report(PERFORMANCE_COUNTER_0_BASE,
+								alt_get_cpu_freq(),
+								2,
+								"Image expanding",
+								"Image filtering");
+
+
+/******************************************  Clearing memory **************************************************************************/
+
+	free(pt_buff_filter);
+	free(pt_width);
+	free(pt_height);
+	free(pt_buff_input);
+	free(input_image);
+	free(pt_output);
+
+	printf("Hope it was worth the waiting.\n");												// Notify the user
+
+	return 0;
+}

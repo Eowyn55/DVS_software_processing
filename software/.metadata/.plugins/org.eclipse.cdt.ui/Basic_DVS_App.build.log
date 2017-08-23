@@ -1,0 +1,9 @@
+22:52:59 **** Build of configuration Nios II for project Basic_DVS_App ****
+make all 
+Info: Building ../Basic_DVS_App_bsp/
+D:/program_files/altera/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Basic_DVS_App_bsp/
+[BSP build complete]
+[Basic_DVS_App build complete]
+
+22:53:00 Build Finished (took 782ms)
+
